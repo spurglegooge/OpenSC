@@ -13,6 +13,23 @@ IDI_SMARTCARD          ICON                    "..\\..\\win32\\DDORes.dll_14_230
 IDI_SMARTCARD          ICON                    "../../win32/DDORes.dll_14_2302.ico"
 #endif
 
+#ifdef __MINGW32__
+/* MSVC adds this via /MANIFESTDEPENDENCY (win32/Make.rules.mak); windres has no
+ * equivalent, so embed it here. Without ComCtl32 v6 the static import of
+ * TaskDialogIndirect is unresolvable and the DLL fails to load. */
+2 24
+BEGIN
+  "<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>\r\n"
+  "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">\r\n"
+  "  <dependency><dependentAssembly><assemblyIdentity\r\n"
+  "      type=""win32"" name=""Microsoft.Windows.Common-Controls""\r\n"
+  "      version=""6.0.0.0"" processorArchitecture=""*""\r\n"
+  "      publicKeyToken=""6595b64144ccf1df"" language=""*"" />\r\n"
+  "  </dependentAssembly></dependency>\r\n"
+  "</assembly>\r\n"
+END
+#endif
+
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION OPENSC_VERSION_MAJOR,OPENSC_VERSION_MINOR,OPENSC_VERSION_FIX,OPENSC_VERSION_REVISION
 	PRODUCTVERSION OPENSC_VERSION_MAJOR,OPENSC_VERSION_MINOR,OPENSC_VERSION_FIX,OPENSC_VERSION_REVISION
